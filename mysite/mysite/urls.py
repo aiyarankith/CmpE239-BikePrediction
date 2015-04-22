@@ -10,6 +10,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'polls.views.index', name='index'),
     url(r'^index/', 'polls.views.index', name='index'),
     url(r'^blog/', 'polls.views.blog', name='blog'),
     url(r'^pricing/', 'polls.views.pricing', name='pricing'),
