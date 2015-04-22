@@ -3,11 +3,12 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from polls.models import models, find_document
 
 def index(request):
     template = loader.get_template('index.html')
     context = RequestContext(request, {
-        
+        "abc":find_document()
     })
     return HttpResponse(template.render(context))
 
