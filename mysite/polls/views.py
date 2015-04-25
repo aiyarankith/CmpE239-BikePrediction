@@ -55,3 +55,18 @@ def services(request):
         
     })
     return HttpResponse(template.render(context))
+
+
+def demo_form(request):
+    template = loader.get_template('demo_form.html')
+    context = RequestContext(request, {
+        
+    })
+    return HttpResponse(template.render(context))
+def add_details(request):
+    print(request.GET["name"])
+    template = loader.get_template('result_of_form.html')
+    context = RequestContext(request, {
+        "req_name":request.GET["name"]
+    })
+    return HttpResponse(template.render(context))

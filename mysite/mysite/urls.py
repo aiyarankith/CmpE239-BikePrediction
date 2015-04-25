@@ -19,5 +19,9 @@ urlpatterns = [
     url(r'^blog-item/', 'polls.views.blogitem', name='blog-item'),
     url(r'^portfolio/', 'polls.views.portfolio', name='portfolio'),
     url(r'^services/', 'polls.views.services', name='services'),
+    
+    #Example Passing Form elements.
+    url(r'^demo_form/', 'polls.views.demo_form', name='demo_form'),
+    url(r'^add_details/', 'polls.views.add_details', name='result_of_form'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
