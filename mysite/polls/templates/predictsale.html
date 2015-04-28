@@ -1,0 +1,517 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Predict Bike Sale</title>
+    
+    <!-- core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet">
+     <link href="{% static 'css/jquery.datetimepicker.css' %}" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{% static 'images/ico/favicon.ico' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'images/ico/apple-touch-icon-57-precomposed.png' %}">
+    
+    <script>
+var state_arr = new Array("AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY");
+
+//Cities
+var s_a = new Array();
+s_a[0] = "";
+s_a[1] = "Auburn|Bessemer|Birmingham|Daphne|Decatur|Dothan|Hoover|Huntsville|Mobile|Montgomery|Tuscaloosa";
+s_a[2] = "Anchorage|Badger|College|Fairbanks|Juneau|Ketchikan|Sitka";
+s_a[3] = "Chandler|Gilbert|Glendale|Mesa|Peoria|Phoenix|Tempe|Tuscon|Surprise";
+s_a[4] = "Bentonville|Conway|Fayetteville|Fort_Smith|Jonesboro|Little_Rock|North_Little_rock|Pine_Bluff|Rogers|Springdale";
+s_a[5] = "Anaheim|Fresno|Los_Angeles|Long_Beach|Sacramento|Santa_Ana|Santa_Cruz|San_Diego|San_Francisco|San_Jose|Oakland";
+s_a[6] = "Arvada|Aurora|Centennial|Colorado_Springs|Denver|Fort Collins|Lakewood|Pueblo|Thornton|Westminster";
+s_a[7] = "Bridgeport|New_Haven|Stamford|Hartford|Waterbury|Norwalk|Danbury|New_Britain|West_Hartford|Bristol|Meriden";
+s_a[8] = "Bear|Dover|Middletown|Newark|Wilmington"
+s_a[9] = "Jacksonville|Miami|Tampa|Orlando|Hialeah|Fort_Lauderdale|Cape_Coral|Pembroke_Pines";
+s_a[10] = "Atlanta|Columbus|Augusta|Athens|Roswell|Macon|Albany";
+s_a[11] = "Honolulu|Molokai|Oahu|Maui";
+s_a[12] = "Nampa|Boise_City|Meridian|Idaho_Falls|Pocatello|Caldwell|Twin_Falls|Lewiston";
+s_a[13] = "Chicago|Aurora|Rockford|Joliet|Naperville|Springfield|Peoria|Elgin|Waukegan|Cicero|Champaign";
+s_a[14] = "Indianapolis|Fort_Wayne|Evansville|South_Bend|Carmel|Fishers|Bloomington|Hammond|Gary|Lafayette|Muncie";
+s_a[15] = "Des_Moines|Cedar_Rapids|Davenport|Iowa_City|Waterloo|Ames|Dubuque|Ankeny";
+s_a[16] = "Wichita|Overland_Park|Kansas_City|Olathe|Topeka|Lawrence|Manhattan|Lenexa|Salina";
+s_a[17] = "Louisville|Lexington|Owensboro|Covington|Hopkinsville|Richmond|Florence|Georgetown|Elizabethtown";
+s_a[18] = "New_Orleans|Shreveport|Metairie|Lafayette|Kenner|Monroe|Alexandria";
+s_a[19] = "Portland|Lewiston|Bangor";
+s_a[20] = "Baltimore|Columbia|College_Park";
+s_a[21] = "Boston|Springfield|Lowell|Cambridge|New_Bedford|Brockton|Lynn|Fall_River|Newton";
+s_a[22] = "Detroit|Warren|Ann_Arbor|Lansing|Flint|Clinton|Dearborn|Livonia";
+s_a[23] = "Minneapolis|Rochester|Bloomington|Duluth|Brooklyn_Park|Plymouth|Woodbury|Eagan|Maple_Grove";
+s_a[24] = "Jackson|Gulfport|Southhaven|Biloxi|Meridian|Tupelo|Greenville";
+s_a[25] = "Kansas_City|Springfield|Independence|Columbia|Liberty|Nixa|Manchester";
+s_a[26] = "Billings|Bozeman|Great_Falls|Helena|Kalispell|Missoula";
+s_a[27] = "Columbus|Fremont|Lincoln|Norfolk|Omaha|Grand_Island|La_Vista";
+s_a[28] = "Las_Vegas|Reno|Paradise|Spring_Valley|Enterprise|Sparks";
+s_a[29] = "Concord|Derry|Dover|Keene|Laconia|Manchester|Nashua";
+s_a[30] = "Newark|Jersey_City|Paterson|Elizabeth|Edison|Clifton|Trenton|Camden";
+s_a[31] = "Albuquerque|Las_Cruces|Sanata_Fe|Clovis|Roswell|Hobbs|Farmington";
+s_a[32] = "New_York|Buffalo|Rochester|Syracuse|Albany|Mount_Vernon|Ithaca|Lockport|Kingston";
+s_a[33] = "Charlotte|Raleigh|Greensboro|Durham|Cary|Wilmington|High_Point";
+s_a[34] = "Bismarck|Fargo|Grand_Forks|Jamestown|Mandan|Minot|West_Fargo|Williston";
+s_a[35] = "Columbus|Cleveland|Cincinnati|Toledo|Akron|Dayton|Parma|Canton|Youngstown|Lorain";
+s_a[36] = "Oklahoma_City|Tulsa|Norman|Lawton|Edmond|Moore|Midwest_City|Enid|Stillwater";
+s_a[37] = "Portland|Salem|Eugene|Gresham|Bend|Medford|Springfield|Corvallis";
+s_a[38] = "Philadelphia|Pittsburgh|Allentown|Erie|Reading|Scranton|Lancaster|Harrisburg";
+s_a[39] = "Providence|Warwick|Cranston|Pawtucket";
+s_a[40] = "Columbia|Charleston|Rock_Hill|Greensville|Summerville|Sumter|Goose_Creek";
+s_a[41] = "Brookings|Aberdeen|Mitchell|Pierre|Rapid_City|Watertown";
+s_a[42] = "Memphis|Nashville|Knoxville|Clarksville|Franklin|Jackson|Johnson_City|Bartlett";
+s_a[43] = "Houston|San_Antonio|Dallas|Austin|Fort_Worth|Arlington|Plano";
+s_a[44] = "Salt_Lake_City|Provo|West_Jordon|Orem|Sandy|Ogden|Layton";
+s_a[45] = "Burlington|Montpelier|Rutland|South_Burlington";
+s_a[46] = "Norfolk|Chesapeake|Arlington|Richmond|Alexandria|Hampton|Roanoke|Portsmouth";
+s_a[47] = "Seattle|Spokane|Tacoma|Vancouver|Kent|Everett|Renton|Yakima";
+s_a[48] = "Beckley|Charleston|Fairmont|Huntington|Martinsburg|Morgontown|Weirton|Wheeling";
+s_a[49] = "Milwaukee|Madison|Green_Bay|Racine|Appleton|Oshkosh|Janesville|West_Allis";
+s_a[50] = "Casper|Gillette|Laramie|Rock_Springs|Sheridan";
+
+
+
+
+function populateCities(stateElementId, cityElementId) {
+
+ var selectedStateIndex = document.getElementById(stateElementId).selectedIndex;
+
+ var cityElement = document.getElementById(cityElementId);
+
+ cityElement.length = 0; 
+ cityElement.options[0] = new Option('Select City', '');
+ cityElement.selectedIndex = 0;
+
+ var city_arr = s_a[selectedStateIndex].split("|");
+
+ for (var i = 0; i < city_arr.length; i++) {
+     cityElement.options[cityElement.length] = new Option(city_arr[i], city_arr[i]);
+ }
+}
+
+function populateStates(stateElementId, cityElementId) {
+
+ var stateElement = document.getElementById(stateElementId);
+ stateElement.length = 0;
+ stateElement.options[0] = new Option('Select State', '-1');
+ stateElement.selectedIndex = 0;
+ for (var i = 0; i < state_arr.length; i++) {
+     stateElement.options[stateElement.length] = new Option(state_arr[i], state_arr[i]);
+ }
+
+
+ if (cityElementId) {
+     stateElement.onchange = function () {
+         populateCities(stateElementId, cityElementId);
+     };
+ }
+}
+
+</script>
+<script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+<script type="text/javascript" src="http://www.amcharts.com/lib/3/gauge.js"></script>
+<script type="text/javascript" src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+var gaugeChart = AmCharts.makeChart( "chartdiv", {
+	  "type": "gauge",
+	  "theme": "light",
+	  "axes": [ {
+	    "axisThickness": 1,
+	    "axisAlpha": 0.2,
+	    "tickAlpha": 0.2,
+	    "valueInterval": 200,
+	    "bands": [ {
+	      "color": "#84b761",
+	      "endValue": 500,
+	      "startValue": 0
+	    }, {
+	      "color": "#fdd400",
+	      "endValue": 1030,
+	      "startValue": 500
+	    }, {
+	      "color": "#cc4748",
+	      "endValue": 2000,
+	      "innerRadius": "95%",
+	      "startValue": 1030
+	    } ],
+	    "bottomText": "0 bike count",
+	    "bottomTextYOffset": -20,
+	    "endValue": 2000
+	  } ],
+	  "arrows": [ {} ],
+	  "export": {
+	    "enabled": true,
+	    "libs": {
+	      "path": "http://www.amcharts.com/lib/3/plugins/export/libs/"
+	    }
+	  }
+	} );
+	setInterval( randomValue, 2000 );
+	// set random value
+	function randomValue() {
+		{%if total_sale %}
+			var value = '{{total_sale}}';
+			console.log("inside if", temp);
+		{%else %}
+			console.log("inside else");
+			var value = Math.round( Math.random() * 2000 );
+		{%endif%}
+	  if ( gaugeChart ) {
+	    if ( gaugeChart.arrows ) {
+	      if ( gaugeChart.arrows[ 0 ] ) {
+	        if ( gaugeChart.arrows[ 0 ].setValue ) {
+	          gaugeChart.arrows[ 0 ].setValue( value );
+	          gaugeChart.axes[ 0 ].setBottomText( value + " bike sale" );
+	        }
+	      }
+	    }
+	  }
+	}
+</script>
+
+</head><!--/head-->
+
+<body>
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-4">
+                        <div class="top-number"><p><i class="fa fa-phone-square"></i>+1 669-300-8317</p></div>
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
+                       <div class="social">
+                            <ul class="social-share">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li> 
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                            </ul>
+                            <div class="search">
+                                <form role="form">
+                                    <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                                    <i class="fa fa-search"></i>
+                                </form>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/index"><img src="{% static 'images/recreation.png' %}" height="90" alt="logo"></a>
+                </div>
+                
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="/portfolio">Services</a></li>
+                        <li><a href="/bikedock">Bike Dock</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/generate_station_details">Customer Analysis</a></li>
+                                <li><a href="/seasondock">Season wise Sale</a></li>
+                                <li><a href="/topstations">Top Start Stations</a></li>
+                            </ul>
+                        </li>
+                        <li  class="active"><a href="/predictsale">Prediction</a></li>
+                        <li><a href="/about-us">About Us</a></li>
+                        <li><a href="/contact-us">Contact</a></li>                        
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+        
+    </header><!--/header-->
+	
+	<section id="contact-page">
+        <div class="container">
+            <div class="center"> <br><br>       
+                <h2>Predict the Bike Sale</h2>
+                <p class="lead">Get the weather information and our algorithm gives you nearly accurate results</p>
+            </div> 
+            <div class="row contact-wrap"> 
+                <div class="status alert alert-success" style="display: none"></div>
+                
+                    <div class="col-sm-5 col-sm-offset-1">
+                    <form class="contact-form" action="" method="post">
+               		 {% csrf_token %}
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input type ="text" name="dt" id="datetimepicker" required >
+                        </div>
+                        <div class="form-group">
+                            <label>State *</label>
+                            <select id="state" name="state" required></select> <br /> <br />
+                            <label>City *</label>
+                            <select name="city" id="city" required></select> <br /> <br />
+							<script language="javascript">
+								populateStates("state", "city");
+							</script>
+						</div>
+						<div class="form-group">
+                            <label>Season *</label> 
+                            <select name="season" required>
+								<option value="">---Select---</option>
+								<option value='1'>Spring</option>
+								<option value='2'>Summer</option>
+								<option value='3'>Fall</option>
+								<option value='4'>Winter</option>
+
+							</select>
+						</div>  
+						<div class="form-group">
+                            <label>Weather Condition</label>
+                            <input type="text" name="weather" id="condition" required readonly><div id="icon"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Temperature(°C)</label>
+                            <input type="text" name="temp" id="temp" required readonly>
+                        </div>     
+                        <div class="form-group">
+                            <label>Feels like(°C)</label>
+                            <input type="text" name="atemp" id="atemp" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Humidity</label>
+                            <input type="text" name="humidity" id="humidity" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Windspeed</label>
+                            <input type="text" name="windspeed" id="wspeed" required readonly>
+                        </div>  
+                        
+                                              
+                        <div class="form-group" >
+                            
+                            <input type="submit" value="Predict Sales" class="btn btn-primary btn-lg">
+                        </div>
+						<div id="blank"></div>
+						
+						</form> 
+					</div>
+					<div class="col-sm-5">
+						<div class="form-group">
+                			<button id="buttonweather" class="btn btn-primary btn-lg">Get Weather Forecast</button>
+                        </div>   
+                        <div class="form-group">
+                            <h2>Prediction Gauge</h2>
+                            <div id="chartdiv"></div>	
+                            {% if total_sale %}
+							<h2 style="color: red;">Estimated sale on {{date}} is {{total_sale }}</h2>
+							{% endif %}
+                        </div>
+                     				
+					</div>
+
+				</div>
+                		             
+                    </div>
+        </div><!--/.container-->
+    </section><!--/#contact-page-->
+              
+    <section id="bottom">
+        <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="widget">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">We are hiring</a></li>
+                            <li><a href="#">Meet the team</a></li>
+                            <li><a href="#">Copyright</a></li>
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="widget">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#">Faq</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Forum</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">Refund policy</a></li>
+                            <li><a href="#">Ticket system</a></li>
+                            <li><a href="#">Billing system</a></li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="widget">
+                        <h3>Developers</h3>
+                        <ul>
+                            <li><a href="#">Web Development</a></li>
+                            <li><a href="#">SEO Marketing</a></li>
+                            <li><a href="#">Theme</a></li>
+                            <li><a href="#">Development</a></li>
+                            <li><a href="#">Email Marketing</a></li>
+                            <li><a href="#">Plugin Development</a></li>
+                            <li><a href="#">Article Writing</a></li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="widget">
+                        <h3>Our Partners</h3>
+                        <ul>
+                            <li><a href="#">Adipisicing Elit</a></li>
+                            <li><a href="#">Eiusmod</a></li>
+                            <li><a href="#">Tempor</a></li>
+                            <li><a href="#">Veniam</a></li>
+                            <li><a href="#">Exercitation</a></li>
+                            <li><a href="#">Ullamco</a></li>
+                            <li><a href="#">Laboris</a></li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+            </div>
+        </div>
+    </section><!--/#bottom-->
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2015 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Team Matrix</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript">
+        $('.carousel').carousel()
+    </script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'js/jquery.isotope.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    
+</body>
+<script src="{% static 'js/jquery-dt.js' %}"></script>
+<script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
+<script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
+<script>
+$('#datetimepicker').datetimepicker({
+	
+	lang:'en',
+	formatTime:'H:i',
+	formatDate:'Y/m/d',
+	defaultTime: new Date(),
+	
+	
+	minDate:'-1970/01/01', // yesterday 
+	maxDate:'+1970/01/10' // tommorow 
+});
+</script>
+ <script>
+$(function(){
+  $('#buttonweather').click(function() {
+	 var state = document.getElementById("state").value;
+		var city = document.getElementById("city").value;
+		var d = document.getElementById("datetimepicker").value;
+		 if(d==""){
+			 alert("Please Enter Date");
+			 return;
+		 }
+		if(state=="-1" || city==""){
+			alert("Please enter State and City");
+			return;
+		}
+		var flag = 0;
+  $.ajax({
+	
+  url : "http://api.wunderground.com/api/c17219481ccbdae9/hourly10day/q/"+state+"/"+city+".json",
+  dataType : "jsonp",
+  success : function(parsed_json) {
+	/* var Forcast = parsed_json['forecast']['simpleforecast']['forecastday'];
+	 for (index in Forcast) {
+		 $('#GetWeatherDay').html(Forcast[0]['date']['day']);
+		 
+	 }*/
+  $.each(parsed_json['hourly_forecast'],function(index,value){
+	 var day = new Date(d).getDate();
+	 var hr = new Date(d).getHours();
+	 var month = new Date(d).getMonth()+1;	
+	 var year = new Date(d).getFullYear();
+	 
+	 if(value['FCTTIME']['hour']==hr && value['FCTTIME']['mday']==day && value['FCTTIME']['year']==year && value['FCTTIME']['mon']==month){
+		 document.getElementById("temp").value = (((value.temp.english)-32)*5)/9;
+		 document.getElementById("atemp").value = (((value.feelslike.english)-32)*5)/9;
+		 document.getElementById("humidity").value = value.humidity;
+		 document.getElementById("wspeed").value = value.wspd.english;
+		 document.getElementById("condition").value = value.condition;
+		 var icon_url = value.icon_url;
+		 var icon = '<img src="'+icon_url+'"/>';
+		 document.getElementById("icon").innerHTML = icon;
+		 document.getElementById("blank").innerHTML = " ";
+		 flag =1;
+		 
+	 }
+	});
+  if(flag==0){
+		//document.getElementById("GetWeatherDay").innerHTML = new Date("2015/04/25 10:00").getDate(); //getHours()
+		 document.getElementById("blank").innerHTML = "No Forecast Available";
+		 document.getElementById("temp").value = " ";
+		 document.getElementById("atemp").value = " ";
+		 document.getElementById("humidity").value = " ";
+		 document.getElementById("wspeed").value = " ";
+		 document.getElementById("condition").value = " ";
+		 document.getElementById("icon").innerHTML = " ";
+	 }
+	
+  
+  }
+  });
+});
+});
+</script> 
+</script> 
+</html>
